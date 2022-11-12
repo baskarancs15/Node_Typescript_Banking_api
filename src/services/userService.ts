@@ -44,15 +44,15 @@ export async function createUser(data:any) {
 export async function depositAmount(data:any) {
     try {
         console.log("came in deposit service",data);
-        let checkAccountNotExist = await AccountModel.findOne({accountNo: data.accountNo});
-        console.log(checkAccountNotExist);
-        if(!checkAccountNotExist){
+        let checkAccountisExist = await AccountModel.findOne({accountNo: data.accountNo});
+        console.log(checkAccountisExist);
+        if(!checkAccountisExist){
             return {
                 code: 404,
                 message: `Please provide a valid account number`
             }
         }
-        if(checkAccountNotExist.amount > 100000){
+        if(checkAccountisExist.amount > 100000){
             return {
                 code: 404,
                 message: `Account balance cannot exceed $100000`
@@ -205,10 +205,10 @@ export async function userTransferById(data:any) {
             }
         }
 
-        if(amount > 30000){
+        if(amount >= 30000){
             return{
                 code: 404,
-                message: `Maximum withdrawal amount is 30000 for account ${recieverId}`, 
+                message: `Maximum Transfer amount is 30000 for account ${recieverId}`, 
             }
         }
 

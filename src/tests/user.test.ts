@@ -91,9 +91,6 @@ request(app)
     expect(response.body).toHaveProperty('data');
   }),
 );
-
-
-  
 });
 
 
@@ -178,6 +175,49 @@ describe('PUT /withdraw', () => {
      })
     .expect(200)
 );
+ 
+});
+
+
+
+//POST-Transfer
+describe('POST /transfer', () => {
+  it('responds with an success message status 200', async () =>
+  request(app)
+    .post('/transfer')
+    .set('Accept', 'application/json')
+    .send({
+      "sender":"UID_1001",
+      "reciever":"UID_1002",
+      "amount":"1000"
+    })
+    .expect(200)
+  );
+
+  it('responds with an error message status 404', async () =>
+  request(app)
+    .post('/transfer')
+    .set('Accept', 'application/json')
+    .send({
+      "sender":"UID_1001",
+      "reciever":"UID_1002",
+      "amount":"30000"
+    })
+    .expect(404)
+  );
+
+
+  it('responds with an success message status 404', async () =>
+  request(app)
+    .post('/transfer')
+    .set('Accept', 'application/json')
+    .send({
+      "sender":"UID_1001",
+      "reciever":"UID_1002",
+      "amount":"500"
+    })
+    .expect(404)
+  );
  
 });
 

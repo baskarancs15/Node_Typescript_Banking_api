@@ -1,13 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { object, string, TypeOf } from "zod";
+import { object, string,number, TypeOf } from "zod";
 
 
 export const createUserSchema = object({
-  // In this example we will only validate the request body.
-  // body: object({
-  //   // email should be valid and non-empty
-  //   accountHolderName: z.string().min(1).max(18),
-  // }),
   body: object({
     name: string({
       required_error: "First name is required",
@@ -15,8 +10,20 @@ export const createUserSchema = object({
   })
 });
 
+export const depositSchema = object({
+  body: object({
+    accountNo: string({
+      required_error: "accountNo is required",
+    }).nonempty({ message: "accountNo Can't be empty" }),
+    amount: number({
+      required_error: "amount is required",
+    }).int({ message: "amount Expected number" }),
+  })
+});
+
 
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+export type DepositUserInput = TypeOf<typeof depositSchema>["body"];
 
 
 export const UserSchema: Schema = new Schema({
