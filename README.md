@@ -18,7 +18,7 @@ REST API principals - Using HTTP methods
 <li>Deposit Amount in user account</li>
 <li>Check Balance in user account</li>
 <li>Withdraw from user account</li>
-<li>Transfer from one user to another user account</li>
+<li>Transfer Amount from one user to another user account</li>
 
 # Development
 
