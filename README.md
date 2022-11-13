@@ -28,7 +28,7 @@ You should have installed at least node version 14.0.
 
 You should have installed MongoDB in your local.
 
-Clone the repository:
+# Clone the repository:
 git clone https://github.com/baskarancs15/REST-API-Node-Typescript.git
 
 Install the dependencies within the project directory:
