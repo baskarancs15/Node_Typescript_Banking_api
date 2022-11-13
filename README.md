@@ -2,7 +2,7 @@
 
 Note: Please import the below link in local postman
 
-https://www.getpostman.com/collections/2c5726321e750df55c81
+https://www.getpostman.com/collections/83a0256415084ec75c95
 
 # Technologies
 <li>Node.js</li>
@@ -23,6 +23,10 @@ REST API principals - Using HTTP methods
 # Development
 
 You should have installed at least node version 14.0.
+
+# Database
+
+You should have installed MongoDB in your local.
 
 Clone the repository:
 git clone https://github.com/baskarancs15/REST-API-Node-Typescript.git
