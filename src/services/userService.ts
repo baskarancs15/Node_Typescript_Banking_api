@@ -194,10 +194,26 @@ export async function userWithDrawById(data:any) {
 
 export async function userTransferById(data:any) {
     try {
+        console.log(data.amount);
         let senderId = data.sender;
         let recieverId = data.reciever;
         let amount = data.amount;
-
+        console.log(amount);
+        //check sender
+        let senderData = await AccountModel.findOne({accountNo:senderId});
+        let recieverData = await AccountModel.findOne({accountNo:recieverId});
+        if(!senderData){
+            return{
+                code: 404,
+                message: `${senderId} not a valid user`, 
+            } 
+        }
+        if(!recieverData){
+        return{
+                code: 404,
+                message: `${recieverId} not a valid user`, 
+            } 
+        }
         if(amount < 1000){
             return{
                 code: 404,
@@ -213,18 +229,26 @@ export async function userTransferById(data:any) {
         }
 
         let checkSenderBalance:any = await AccountModel.findOne({accountNo:senderId})
+        let senderBalance = parseInt(checkSenderBalance.amount)
         if(!checkSenderBalance){
             return{
                 code: 404,
                 message: "Please provide a valid userId!", 
             }
         }
-        if(checkSenderBalance.amount < amount){
+        console.log(typeof senderBalance);
+        console.log(typeof amount);
+        if(amount > senderBalance){ 
             return{
                 code: 404,
                 message: "Not Enough Balance to Transfer", 
             }
         }
+       
+        
+        let updateSenderBalance = senderBalance - amount;
+        await AccountModel.findOneAndUpdate({accountNo:senderId},{$set:{amount:updateSenderBalance}});
+       
         let getRecieverBalance = await AccountModel.findOne({accountNo:recieverId},{amount:1,_id:0});
         if(!getRecieverBalance){
             return{
@@ -233,10 +257,8 @@ export async function userTransferById(data:any) {
             }
         }
         
-        let updateSenderBalance = parseInt(checkSenderBalance.amount) - parseInt(amount);
-        await AccountModel.findOneAndUpdate({accountNo:senderId},{$set:{amount:updateSenderBalance}});
-       
-        let updateRecieverBalance =  parseInt(getRecieverBalance!.amount)+parseInt(amount);
+        let updateRecieverBalance =  parseInt(getRecieverBalance!.amount) + amount;
+        console.log(updateRecieverBalance)
         let result = await AccountModel.findOneAndUpdate({accountNo:recieverId},{$set:{amount:updateRecieverBalance}});
         if(result){
             return {
