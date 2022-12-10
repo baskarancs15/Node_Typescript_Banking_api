@@ -5,7 +5,7 @@ Note: Please import the below link in local postman
 https://www.getpostman.com/collections/83a0256415084ec75c95
 
 # Technologies
-<li>Node.js</li>
+<li>NodeJS</li>
 <li>MongoDB with Mongoose</li>
 <li>TypeScript</li>
 <li>Express.js & Express.js middleware</li>
